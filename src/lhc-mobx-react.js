@@ -1,8 +1,8 @@
-import { useRef, useReducer } from 'react'
+import { useRef, useReducer, useEffect } from 'react'
 import { Reaction } from 'mobx'
 
 function observerComponentNameFor(component) {
-    return `${component}&observed`
+    return `&observer${component}`
 }
 
 function useObserver(fn, baseComponentName = 'observed', options = {}) {
@@ -30,6 +30,13 @@ function useObserver(fn, baseComponentName = 'observed', options = {}) {
         //监听更新
         rendering = fn()
     })
+
+    useEffect(()=>{
+        return () =>{
+            reaction.dispose()
+            reactionTrackRef.current = null
+        }
+    },[])
 
     return rendering
 }
