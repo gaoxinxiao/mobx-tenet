@@ -1,19 +1,12 @@
-import { observable, action, configure } from 'mobx'
+// import { observable, action, configure } from 'mobx'
+import { observable, action } from '../lhc-mobx'
 
-configure({ enforceActions: 'observed' })
+const state = observable({
+    count: 1
+})
 
-class Store {
+state.setCount = action(() => {
+    state.count++
+})
 
-    @observable count = 0
-
-    @action.bound setCount() {
-        this.count++
-        console.log('点赞'+this.count)
-    }
-
-}
-
-
-let store = new Store()
-
-export default store
+export default state
